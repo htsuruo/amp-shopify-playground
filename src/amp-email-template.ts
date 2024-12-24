@@ -1,4 +1,5 @@
 import { Product } from './type'
+import { formatPrice } from './util'
 
 export const createAmpEmailTemplate = (product: Product) => {
   return `
@@ -16,6 +17,10 @@ export const createAmpEmailTemplate = (product: Product) => {
       }
     </style>
     <style amp-custom>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+      }
+
       .product-card {
         padding: 16px;
         max-width: 400px;
@@ -34,9 +39,9 @@ export const createAmpEmailTemplate = (product: Product) => {
 
   <body>
     <div class="product-card">
-      <h2>$xx</h2>
-      <p>$xx</p>
-      <p>価格: $xxx</p>
+      <h2>${product.title}</h2>
+      <p>${product.description}</p>
+      <p>価格: ${formatPrice(product.price)}円</p>
 
       <form method="post" action-xhr="https://your-domain.com/cart/add.js">
         <input type="hidden" name="id" value="${product.variantId}">

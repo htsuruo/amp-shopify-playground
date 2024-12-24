@@ -6,7 +6,7 @@ import { Product } from './type'
 const product: Product = {
   title: '素敵な商品',
   description: '商品の説明文がここに入ります',
-  price: '¥2,000',
+  price: 2000,
   variantId: 12345678,
 }
 
