@@ -1,4 +1,5 @@
 import { serve } from '@hono/node-server'
+import axios from 'axios'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 
@@ -21,18 +22,17 @@ app.post('/proxy/cart/add', async (c) => {
   try {
     const body = await c.req.json()
 
-    const shopifyResponse = await fetch(
+    const response = await axios.post(
       'https://02ebb2-4d-2.myshopify.com/cart/add.js',
+      body,
       {
-        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
       }
     )
 
-    const data = await shopifyResponse.json()
+    const data = response.data
 
     return c.json(data, {
       headers: {
@@ -47,6 +47,6 @@ app.post('/proxy/cart/add', async (c) => {
   }
 })
 
-serve(app, () => {
+export default serve(app, () => {
   console.log('Server is running on http://localhost:3000')
 })
