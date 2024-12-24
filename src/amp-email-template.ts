@@ -1,7 +1,10 @@
 import { Product } from './type'
 import { formatPrice } from './util'
 
-export const createAmpEmailTemplate = (product: Product) => {
+export const createAmpEmailTemplate = (
+  proxyServerUrl: string,
+  product: Product
+) => {
   return `
   <!doctype html>
   <html ⚡4email>
@@ -43,7 +46,7 @@ export const createAmpEmailTemplate = (product: Product) => {
       <p>${product.description}</p>
       <p>価格: ${formatPrice(product.price)}円</p>
 
-      <form method="post" action-xhr="https://your-domain.com/cart/add.js">
+      <form method="post" action-xhr="${proxyServerUrl}">
         <input type="hidden" name="id" value="${product.variantId}">
         <input type="hidden" name="quantity" value="1">
         <input type="submit" value="カートに追加" class="add-to-cart-button">

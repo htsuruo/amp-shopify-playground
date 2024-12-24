@@ -92,3 +92,9 @@ const redirectToCheckout = (cartToken) => {
 ## VS Code Extension
 
 - [amphtml-validator - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=amphtml.amphtml-validator)
+
+## エラー周り
+
+普通に実行するCORSで弾かれるのでShopify側での設定が必要。
+
+> [amp-form] Form submission failed: Error: Request viewerRenderTemplate failed: Error: Class$obf__10: Access to fetch at 'https://[YOUR_DOMAIN]/cart/add.js' from origin 'https://mail.google.com' has been blocked by AMP CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.

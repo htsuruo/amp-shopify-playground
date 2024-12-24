@@ -7,12 +7,16 @@ const product: Product = {
   title: '素敵な商品',
   description: '商品の説明文がここに入ります',
   price: 2000,
-  variantId: 12345678,
+  variantId: 44047455944900,
 }
 
 async function main() {
   // const template = loadTemplate('../amp_template/sample.html')
-  const template = createAmpEmailTemplate(product)
+  const template = createAmpEmailTemplate(
+    // AMPメールのxhrで指定するURLは絶対パスかつHTTPSでなければならない
+    'http://localhost:3000/proxy/cart/add',
+    product
+  )
 
   await new EmailService().sendAmpEmail({
     to: ['hideki.tsuruoka.fb@gmail.com'],
