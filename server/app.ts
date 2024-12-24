@@ -1,4 +1,3 @@
-import { serve } from '@hono/node-server'
 import axios from 'axios'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
@@ -47,6 +46,4 @@ app.post('/proxy/cart/add', async (c) => {
   }
 })
 
-export default serve(app, () => {
-  console.log('Server is running on http://localhost:3000')
-})
+export default app

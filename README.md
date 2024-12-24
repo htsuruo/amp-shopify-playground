@@ -25,13 +25,37 @@ npm install
 npm run exec
 ```
 
+## Shopifyの事前知識
+
+- BASEやSTORESのようにShopifyも同様に知識や経験がない初心者でも簡単にECサイトを立ち上げることができるサービス
+- サイトテーマやブログなど多数のテンプレートが用意されておりGUIポチポチでECサイトを構築できる
+- WordpressなどのCMSのEC版
+- CMS同様にカスタマイズ性に乏しい課題があるが、ShopifyはHeadless APIなど多数のAPIが用意されており柔軟なカスタマイズをすることも可能
+
 ## API調査
 
-- バックオフィス操作 → Admin API
-- フロントエンド開発 → Storefront API
-- 複雑なデータ取得 → GraphQL Admin API
-- イベント処理 → Webhooks
-- 実店舗連携 → マーチャントAPI
+### GraphQL Admin API
+
+- [GraphQL Admin API reference](https://shopify.dev/docs/api/admin-graphql)
+
+> The Admin API lets you build apps and integrations that extend and enhance the Shopify admin.
+Shopify管理画面をより効率化するためのAPIに思える。
+
+### Storefront API
+
+- Headless Commerceと呼ばれるもの
+  - Wordpressのカスタマイズ性に乏しい面への対策として、バックエンド機能だけを切り出したHeadless CMSがあるが、それと同様にECサイトのバックエンドのみを切り出したもの。カート追加やチェックアウト、商品情報の取得など、ECサイトの裏側で必要となる処理を提供
+  - HeadlessなのでフロントはNext.jsやモバイルアプリ、AMPメールなど自由に使うことが可能
+- 例えば[cartCreate](https://shopify.dev/docs/api/storefront/2024-10/mutations/cartCreate)がリファレンス
+
+#### Ajax API
+
+- Shopifyサイトをより高度にカスタマイズしたい人向けのAPI
+- あくまでShopifyサイトからアクセスすることを前提にしているものでカスタマーのブラウザセッションを元にカート追加などの機能を提供している様子
+  - > You can use the Storefront API to interact with a cart during a customer's session.
+
+>The Cart API is used to interact with a cart during a customer's session.
+[Cart API reference](https://shopify.dev/docs/api/ajax/reference/cart)
 
 ## AMP for Emailのアプローチ
 
