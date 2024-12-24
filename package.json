@@ -13,6 +13,7 @@
   "dependencies": {
     "@hono/node-server": "^1.13.7",
     "@sendgrid/mail": "^8.1.4",
+    "@shopify/storefront-api-client": "^1.0.3",
     "axios": "^1.7.9",
     "dotenv": "^16.3.1",
     "hono": "^4.6.14"

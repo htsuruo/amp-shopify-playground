@@ -45,6 +45,7 @@ Shopify管理画面をより効率化するためのAPIに思える
 ### Storefront API
 
 - [Storefront API reference](https://shopify.dev/docs/api/storefront)
+  - ref. [Docs](https://github.com/Shopify/shopify-app-js/tree/main/packages/api-clients/storefront-api-client#readme)
 - Shopifyストアの外でもショッピング体験を作ることができるAPI
   - 例）他のサイトで購入したアイテムをカートに追加するなど
 - Headless Commerceと呼ばれるもの
@@ -63,6 +64,16 @@ Shopify管理画面をより効率化するためのAPIに思える
 参考: ドメイン外から叩こうとすると普通に実行するCORSで弾かれるのでやはりShopifyサイト内での利用に限定している様子。
 
 > [amp-form] Form submission failed: Error: Request viewerRenderTemplate failed: Error: Class$obf__10: Access to fetch at 'https://[YOUR_DOMAIN]/cart/add.js' from origin 'https://mail.google.com' has been blocked by AMP CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+## ユーザに成り代わって商品をカート追加する方法
+
+結論、認証はユーザー操作が必要なので王道のイメージではできない気がする。
+
+### `cartBuyerIdentityUpdate`が使えない理由
+
+- 顧客カート更新であれば[`cartBuyerIdentityUpdate`](https://shopify.dev/docs/api/storefront/2024-04/mutations/cartbuyeridentityupdate)が用意されているが、これは`buyerIdentity`に`customerAccessToken`を指定する必要がある。
+- `customerAccessToken`の取得には[`customerAccessTokenCreate`](https://shopify.dev/docs/api/storefront/2024-10/mutations/customeraccesstokencreate)ミューテーションで生成する必要があり、入力には顧客のemailとpasswordの指定が必要（つまり顧客の操作なしでは実行不可）
+- 設計上顧客のカートの中身を勝手に弄ることは許されていないのだろう
 
 ## VS Code Extension
 

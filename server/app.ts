@@ -1,6 +1,13 @@
+import { createStorefrontApiClient } from '@shopify/storefront-api-client'
 import axios from 'axios'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+
+const client = createStorefrontApiClient({
+  storeDomain: 'http://02ebb2-4d-2.myshopify.com',
+  apiVersion: '2023-10',
+  publicAccessToken: 'dbec8572019cfa3572efd7872268f583',
+})
 
 const app = new Hono()
 
