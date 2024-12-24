@@ -1,5 +1,30 @@
 # amp-shopify-playground
 
+AMP for GmailでのShopify連携（カート追加）を検証するためのレポジトリです。
+
+## Usage
+
+### 事前準備
+
+#### 1. `.env`に以下の情報を記載し作成
+
+```bash
+SHOPIFY_STORE_URL="[YOUR_SHOPIFY_STORE_URL]"
+SENDGRID_API_KEY="[YOUR_SENDGRID_API_KEY]"
+```
+
+#### 2. 依存関係のインストール
+
+```bash
+npm install
+```
+
+#### 3. スクリプトを実行
+
+```bash
+npm run exec
+```
+
 ## API調査
 
 - バックオフィス操作 → Admin API
