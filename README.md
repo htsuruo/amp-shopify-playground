@@ -34,15 +34,18 @@ npm run exec
 
 ## API調査
 
-### GraphQL Admin API
+### Admin API
 
 - [GraphQL Admin API reference](https://shopify.dev/docs/api/admin-graphql)
+- アプリや外部サービスをShopifyストアと連携するのに利用するAPI
 
 > The Admin API lets you build apps and integrations that extend and enhance the Shopify admin.
-Shopify管理画面をより効率化するためのAPIに思える。
+Shopify管理画面をより効率化するためのAPIに思える
 
 ### Storefront API
 
+- Shopifyストアの外でもショッピング体験を作ることができるAPI
+  - 例）他のサイトで購入したアイテムをカートに追加するなど
 - Headless Commerceと呼ばれるもの
   - Wordpressのカスタマイズ性に乏しい面への対策として、バックエンド機能だけを切り出したHeadless CMSがあるが、それと同様にECサイトのバックエンドのみを切り出したもの。カート追加やチェックアウト、商品情報の取得など、ECサイトの裏側で必要となる処理を提供
   - HeadlessなのでフロントはNext.jsやモバイルアプリ、AMPメールなど自由に使うことが可能
@@ -50,12 +53,16 @@ Shopify管理画面をより効率化するためのAPIに思える。
 
 #### Ajax API
 
-- Shopifyサイトをより高度にカスタマイズしたい人向けのAPI
+- Shopifyサイトに閉じた世界でより高度にカスタマイズしたい人向けのAPI
+- いわゆる`/cart/add.js`とかそういった類のもの
 - あくまでShopifyサイトからアクセスすることを前提にしているものでカスタマーのブラウザセッションを元にカート追加などの機能を提供している様子
   - > You can use the Storefront API to interact with a cart during a customer's session.
+- [Cart API reference](https://shopify.dev/docs/api/ajax/reference/cart)
+  - >The Cart API is used to interact with a cart during a customer's session.
 
->The Cart API is used to interact with a cart during a customer's session.
-[Cart API reference](https://shopify.dev/docs/api/ajax/reference/cart)
+参考: ドメイン外から叩こうとすると普通に実行するCORSで弾かれるのでやはりShopifyサイト内での利用に限定している様子。
+
+> [amp-form] Form submission failed: Error: Request viewerRenderTemplate failed: Error: Class$obf__10: Access to fetch at 'https://[YOUR_DOMAIN]/cart/add.js' from origin 'https://mail.google.com' has been blocked by AMP CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 
 ## AMP for Emailのアプローチ
 
@@ -117,8 +124,7 @@ const redirectToCheckout = (cartToken) => {
 
 - [amphtml-validator - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=amphtml.amphtml-validator)
 
-## エラー周り
+## References
 
-普通に実行するCORSで弾かれるのでShopify側での設定が必要。
-
-> [amp-form] Form submission failed: Error: Request viewerRenderTemplate failed: Error: Class$obf__10: Access to fetch at 'https://[YOUR_DOMAIN]/cart/add.js' from origin 'https://mail.google.com' has been blocked by AMP CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+- [shopify_flutter | Flutter package](https://pub.dev/packages/shopify_flutter)
+  - モバイルアプリ（Shopifyの外の世界）でどうやって実装するものなのかを知るのが理解早い。
