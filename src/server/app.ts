@@ -14,52 +14,8 @@ app.use(
   })
 )
 
-app.get('/', (c) => {
-  return c.text('Hello World')
-})
-
-app.post('/cart/associate', async (c) => {
-  // const body = await c.req.json()
-  // const { buyerIdentity, cartId } = await c.req.json()
-  const buyerIdentity = {
-    email: 'hideki.tsuruoka.fb@gmail.com',
-    customer: {
-      email: 'hideki.tsuruoka.fb@gmail.com',
-    },
-  }
-  const cartId =
-    'gid://shopify/Cart/Z2NwLWFzaWEtc291dGhlYXN0MTowMUpGWVpRM1REWlY5VFFLRUY5QUYwQVFQUg?key=d7f222f24009f2baaf98760718281fe1'
-
-  const mutation = `
-      mutation cartBuyerIdentityUpdate($buyerIdentity: CartBuyerIdentityInput!, $cartId: ID!) {
-        cartBuyerIdentityUpdate(buyerIdentity: $buyerIdentity, cartId: $cartId) {
-          cart {
-            id
-            checkoutUrl
-            createdAt
-          }
-          userErrors {
-            field
-            message
-          }
-        }
-      }
-    `
-  const variables = {
-    buyerIdentity,
-    cartId,
-  }
-
-  const data = await executeGraphQLRequest(mutation, {
-    variables,
-  })
-
-  return c.json(data, {
-    headers: {
-      'AMP-Access-Control-Allow-Source-Origin': 'https://02ebb2-4d-2',
-      'Access-Control-Expose-Headers': 'AMP-Access-Control-Allow-Source-Origin',
-    },
-  })
+app.get('/', async (c) => {
+  return c.json('Hello, World!')
 })
 
 app.get('/products', async (c) => {
@@ -131,14 +87,56 @@ app.post('/cart/create', async (c) => {
       lines: [
         {
           quantity: 1,
-          merchandiseId: 'gid://shopify/ProductVariant/44474450903236',
+          merchandiseId: 'gid://shopify/ProductVariant/44047455944900',
         },
       ],
     },
   }
 
-  const { data } = await executeGraphQLRequest(mutation, { variables })
+  const { data } = await executeGraphQLRequest(mutation, variables)
   return c.json(data)
+})
+
+app.post('/cart/associate', async (c) => {
+  // const body = await c.req.json()
+  // const { buyerIdentity, cartId } = await c.req.json()
+  const buyerIdentity = {
+    email: 'hideki.tsuruoka.fb@gmail.com',
+    customer: {
+      email: 'hideki.tsuruoka.fb@gmail.com',
+    },
+  }
+  const cartId =
+    'gid://shopify/Cart/Z2NwLWFzaWEtc291dGhlYXN0MTowMUpGWVpRM1REWlY5VFFLRUY5QUYwQVFQUg?key=d7f222f24009f2baaf98760718281fe1'
+
+  const mutation = `
+      mutation cartBuyerIdentityUpdate($buyerIdentity: CartBuyerIdentityInput!, $cartId: ID!) {
+        cartBuyerIdentityUpdate(buyerIdentity: $buyerIdentity, cartId: $cartId) {
+          cart {
+            id
+            checkoutUrl
+            createdAt
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }
+    `
+  const variables = {
+    buyerIdentity,
+    cartId,
+  }
+
+  const data = await executeGraphQLRequest(mutation, variables)
+
+  return c.json(data, {
+    headers: {
+      'AMP-Access-Control-Allow-Source-Origin': 'https://02ebb2-4d-2',
+      'Access-Control-Expose-Headers': 'AMP-Access-Control-Allow-Source-Origin',
+    },
+  })
 })
 
 export default app

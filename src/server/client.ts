@@ -6,7 +6,10 @@ const client = createStorefrontApiClient({
   publicAccessToken: 'dbec8572019cfa3572efd7872268f583',
 })
 
-const executeGraphQLRequest = async (operation: string, variables?: any) => {
+const executeGraphQLRequest = async (
+  operation: string,
+  variables?: Record<string, any>
+) => {
   try {
     const { data, errors } = await client.request(operation, { variables })
     if (errors) {
