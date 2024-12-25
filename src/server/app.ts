@@ -102,9 +102,6 @@ app.post('/cart/associate', async (c) => {
   // const { buyerIdentity, cartId } = await c.req.json()
   const buyerIdentity = {
     email: 'hideki.tsuruoka.fb@gmail.com',
-    customer: {
-      email: 'hideki.tsuruoka.fb@gmail.com',
-    },
   }
   const cartId =
     'gid://shopify/Cart/Z2NwLWFzaWEtc291dGhlYXN0MTowMUpGWVpRM1REWlY5VFFLRUY5QUYwQVFQUg?key=d7f222f24009f2baaf98760718281fe1'
