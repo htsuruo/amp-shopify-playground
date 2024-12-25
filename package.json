@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "exec": "tsx src/index.ts",
-    "serve": "npx tsx watch server/index.ts"
+    "serve": "npx tsx watch src/server/index.ts"
   },
   "keywords": [],
   "author": "",

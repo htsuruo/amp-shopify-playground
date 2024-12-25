@@ -1,13 +1,7 @@
-import { createStorefrontApiClient } from '@shopify/storefront-api-client'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { Product } from '../types/types'
-
-const client = createStorefrontApiClient({
-  storeDomain: 'http://02ebb2-4d-2.myshopify.com',
-  apiVersion: '2024-10',
-  publicAccessToken: 'dbec8572019cfa3572efd7872268f583',
-})
+import executeGraphQLRequest from './client'
 
 const app = new Hono()
 
@@ -24,20 +18,25 @@ app.get('/', (c) => {
   return c.text('Hello World')
 })
 
-app.post('/proxy/cart/add', async (c) => {
-  try {
-    // const body = await c.req.json()
-    // const { buyerIdentity, cartId } = await c.req.json()
-    const buyerIdentity = {
+app.post('/cart/associate', async (c) => {
+  // const body = await c.req.json()
+  // const { buyerIdentity, cartId } = await c.req.json()
+  const buyerIdentity = {
+    email: 'hideki.tsuruoka.fb@gmail.com',
+    customer: {
       email: 'hideki.tsuruoka.fb@gmail.com',
-    }
-    const cartId = 'xx'
+    },
+  }
+  const cartId =
+    'gid://shopify/Cart/Z2NwLWFzaWEtc291dGhlYXN0MTowMUpGWVpRM1REWlY5VFFLRUY5QUYwQVFQUg?key=d7f222f24009f2baaf98760718281fe1'
 
-    const mutation = `
+  const mutation = `
       mutation cartBuyerIdentityUpdate($buyerIdentity: CartBuyerIdentityInput!, $cartId: ID!) {
         cartBuyerIdentityUpdate(buyerIdentity: $buyerIdentity, cartId: $cartId) {
           cart {
             id
+            checkoutUrl
+            createdAt
           }
           userErrors {
             field
@@ -46,25 +45,21 @@ app.post('/proxy/cart/add', async (c) => {
         }
       }
     `
-    const variables = {
-      buyerIdentity,
-      cartId,
-    }
-
-    const response = await client.request(mutation, { variables })
-    const data = response.data
-
-    return c.json(data, {
-      headers: {
-        'AMP-Access-Control-Allow-Source-Origin': 'https://02ebb2-4d-2',
-        'Access-Control-Expose-Headers':
-          'AMP-Access-Control-Allow-Source-Origin',
-      },
-    })
-  } catch (error) {
-    console.error('Error:', error)
-    return c.json({ error: 'Internal Server Error' }, 500)
+  const variables = {
+    buyerIdentity,
+    cartId,
   }
+
+  const data = await executeGraphQLRequest(mutation, {
+    variables,
+  })
+
+  return c.json(data, {
+    headers: {
+      'AMP-Access-Control-Allow-Source-Origin': 'https://02ebb2-4d-2',
+      'Access-Control-Expose-Headers': 'AMP-Access-Control-Allow-Source-Origin',
+    },
+  })
 })
 
 app.get('/products', async (c) => {
@@ -100,7 +95,7 @@ app.get('/products', async (c) => {
       }
     `
 
-  const { data } = await client.request(query)
+  const data = await executeGraphQLRequest(query)
   let products: Product[] = []
   for (const edge of data.products.edges) {
     const product = {
@@ -113,6 +108,37 @@ app.get('/products', async (c) => {
     products.push(product)
   }
   return c.json(products)
+})
+
+app.post('/cart/create', async (c) => {
+  const mutation = `
+      mutation cartCreate($input: CartInput) {
+        cartCreate(input: $input) {
+          cart {
+            id
+            checkoutUrl
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }
+    `
+
+  const variables = {
+    input: {
+      lines: [
+        {
+          quantity: 1,
+          merchandiseId: 'gid://shopify/ProductVariant/44474450903236',
+        },
+      ],
+    },
+  }
+
+  const { data } = await executeGraphQLRequest(mutation, { variables })
+  return c.json(data)
 })
 
 export default app
