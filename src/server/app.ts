@@ -3,7 +3,7 @@ import { cors } from 'hono/cors'
 import { Product } from '../types/types'
 import executeGraphQLRequest from './client'
 
-const app = new Hono()
+const app = new Hono().basePath('/api')
 
 // CORSミドルウェアの設定
 app.use(
