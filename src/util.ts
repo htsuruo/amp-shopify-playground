@@ -11,5 +11,5 @@ export const loadTemplate = (templatePath: string): string => {
  * @returns カンマ区切りの文字列（例: 1,000）
  */
 export const formatPrice = (price: number): string => {
-  return price.toLocaleString('ja-JP')
+  return Math.floor(price).toLocaleString('ja-JP')
 }

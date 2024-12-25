@@ -69,6 +69,9 @@ Shopify管理画面をより効率化するためのAPIに思える
 
 結論、認証はユーザー操作が必要なので王道のイメージではできない気がする。
 
+追記: これでできそうかも？
+[Create and update a cart with the Storefront API](https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/cart/manage)
+
 ### `cartBuyerIdentityUpdate`が使えない理由
 
 - 顧客カート更新であれば[`cartBuyerIdentityUpdate`](https://shopify.dev/docs/api/storefront/2024-04/mutations/cartbuyeridentityupdate)が用意されているが、これは`buyerIdentity`に`customerAccessToken`を指定する必要がある。
