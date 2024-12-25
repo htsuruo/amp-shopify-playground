@@ -30,9 +30,9 @@ export const createAmpEmailTemplate = (
       }
 
       .product-card {
-        padding: 16px;
+        padding: 4px;
         max-width: 400px;
-        margin: 16px;
+        margin: 4px;
         flex: 1 1 calc(33.333% - 32px); /* 3 columns with space between */
         box-sizing: border-box;
       }
