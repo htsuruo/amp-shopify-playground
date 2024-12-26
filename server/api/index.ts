@@ -1,8 +1,12 @@
-import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { Product } from '../types/types'
+import { handle } from 'hono/vercel'
+import { Product } from '../../src/types/types'
 import executeGraphQLRequest from './client'
+
+export const config = {
+  runtime: 'edge',
+}
 
 const app = new Hono().basePath('/api')
 
@@ -137,10 +141,4 @@ app.post('/cart/associate', async (c) => {
   })
 })
 
-const port = 3000
-console.log(`Server is running on http://localhost:${port}`)
-
-serve({
-  fetch: app.fetch,
-  port,
-})
+export default handle(app)
