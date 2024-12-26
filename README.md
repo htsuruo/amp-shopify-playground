@@ -19,7 +19,13 @@ SENDGRID_API_KEY="[YOUR_SENDGRID_API_KEY]"
 npm install
 ```
 
-#### 3. スクリプトを実行
+#### 3. ローカルサーバーの起動
+
+```bash
+npm run serve
+```
+
+#### 4. スクリプトの実行
 
 ```bash
 npm run exec
