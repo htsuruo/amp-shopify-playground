@@ -1,7 +1,7 @@
 import 'dotenv/config'
+import { Product } from '../types/types'
 import { createAmpEmailTemplate } from './amp-email-template'
 import { EmailService } from './email-service'
-import { Product } from './types/types'
 
 async function main() {
   // const template = loadTemplate('../amp_template/sample.html')

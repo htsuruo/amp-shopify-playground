@@ -1,4 +1,4 @@
-import { Product } from './types/types'
+import { Product } from '../types/types'
 import { formatPrice } from './util'
 
 export const createAmpEmailTemplate = (

@@ -13,8 +13,10 @@ SENDGRID_API_KEY="[YOUR_SENDGRID_API_KEY]"
 
 ### 2. 依存関係のインストール
 
+`./`と`./server`それぞれで実行する必要があります。
+
 ```bash
-npm install
+pnpm install
 ```
 
 ## Usage
@@ -22,7 +24,8 @@ npm install
 ### ローカルサーバーの起動
 
 ```bash
-npm run serve
+cd server
+npm run start
 ```
 
 ### スクリプトの実行
