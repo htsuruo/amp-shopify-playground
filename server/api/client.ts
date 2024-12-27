@@ -3,7 +3,7 @@ import { createStorefrontApiClient } from '@shopify/storefront-api-client'
 const client = createStorefrontApiClient({
   storeDomain: 'http://02ebb2-4d-2.myshopify.com',
   apiVersion: '2024-10',
-  publicAccessToken: 'dbec8572019cfa3572efd7872268f583',
+  publicAccessToken: process.env.SHOPIFY_PUBLIC_ACCESS_TOKEN,
 })
 
 const executeGraphQLRequest = async (
