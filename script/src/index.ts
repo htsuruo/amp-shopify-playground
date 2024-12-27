@@ -1,5 +1,5 @@
+import { Product } from '@types'
 import 'dotenv/config'
-import { Product } from '../types/types'
 import { createAmpEmailTemplate } from './amp-email-template'
 import { EmailService } from './email-service'
 

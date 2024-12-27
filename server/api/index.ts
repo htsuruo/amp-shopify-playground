@@ -1,7 +1,7 @@
+import { Product } from '@types'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { handle } from 'hono/vercel'
-import { Product } from '../../types/types'
 import executeGraphQLRequest from './client'
 
 export const config = {

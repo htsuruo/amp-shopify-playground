@@ -1,0 +1,10 @@
+{
+  "name": "script",
+  "scripts": {
+    "exec": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.4",
+    "dotenv": "^16.3.1"
+  }
+}
