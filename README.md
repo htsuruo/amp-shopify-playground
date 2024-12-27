@@ -2,26 +2,34 @@
 
 AMP for GmailでのShopify連携（カート追加）を検証するためのレポジトリです。
 
+- Node.js(v23.5.0)
+- Server Framework: [Hono](https://hono.dev/)
+- Hosting: [Vercel](https://vercel.com/)
+
 ## Setup
 
-### 1. `.env`に以下の情報を記載し作成
+### `.env`に以下の情報を記載し作成
 
 ```bash
 SHOPIFY_STORE_URL="[YOUR_SHOPIFY_STORE_URL]"
 SENDGRID_API_KEY="[YOUR_SENDGRID_API_KEY]"
 ```
 
-### 2. 依存関係のインストール
-
-`./`と`./server`それぞれで実行する必要があります。
+### 依存関係のインストール
 
 ```bash
 pnpm install
 ```
 
+### Vercelアカウントの作成
+
+ローカルサーバーの起動およびデプロイに[Vercel](https://vercel.com/)のアカウントが必要となります。
+
 ## Usage
 
 ### ローカルサーバーの起動
+
+サーバー実装は`./server`に記載されています。
 
 ```bash
 cd server
@@ -30,7 +38,10 @@ npm run start
 
 ### スクリプトの実行
 
+AMPメールの送信は`./script`に記載されています。
+
 ```bash
+cd script
 npm run exec
 ```
 
