@@ -6,7 +6,7 @@ import { EmailService } from './email-service'
 async function main() {
   // const template = loadTemplate('../amp_template/sample.html')
 
-  const response = await fetch('http://localhost:3000/products')
+  const response = await fetch('http://localhost:3000/api/products')
   const data = await response.json()
   const products = data as Product[]
   console.log(products)
