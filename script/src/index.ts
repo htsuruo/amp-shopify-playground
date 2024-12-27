@@ -3,17 +3,20 @@ import 'dotenv/config'
 import { createAmpEmailTemplate } from './amp-email-template'
 import { EmailService } from './email-service'
 
+// const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://amp-shopify-playground.vercel.app'
+
 async function main() {
   // const template = loadTemplate('../amp_template/sample.html')
 
-  const response = await fetch('http://localhost:3000/api/products')
+  const response = await fetch(`${baseUrl}/api/products`)
   const data = await response.json()
   const products = data as Product[]
   console.log(products)
 
   const template = createAmpEmailTemplate(
     // AMPメールのxhrで指定するURLは絶対パスかつHTTPSでなければならない
-    'https://localhost:3000/proxy/cart/add',
+    `${baseUrl}/cart/create`,
     products
   )
 
