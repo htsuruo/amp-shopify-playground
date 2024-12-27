@@ -1,4 +1,4 @@
-import { Product } from '@types'
+import { Product } from '@shared/types'
 import 'dotenv/config'
 import { createAmpEmailTemplate } from './amp-email-template'
 import { EmailService } from './email-service'

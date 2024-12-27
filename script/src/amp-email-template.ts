@@ -1,4 +1,4 @@
-import { Product } from '@types'
+import { Product } from '@shared/types'
 import { formatPrice } from './util'
 
 export const createAmpEmailTemplate = (
