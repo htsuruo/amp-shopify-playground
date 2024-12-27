@@ -19,10 +19,6 @@ app.use(
   })
 )
 
-app.get('/', async (c) => {
-  return c.json('Hello, World!')
-})
-
 app.get('/products', async (c) => {
   const query = `
       query {

@@ -4,7 +4,8 @@ import { createAmpEmailTemplate } from './amp-email-template'
 import { EmailService } from './email-service'
 
 // const baseUrl = 'http://localhost:3000'
-const baseUrl = 'https://amp-shopify-playground.vercel.app'
+const baseUrl =
+  'https://amp-shopify-playground-htsuruo-htsuruos-projects.vercel.app'
 
 async function main() {
   // const template = loadTemplate('../amp_template/sample.html')
