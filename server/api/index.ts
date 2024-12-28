@@ -1,6 +1,7 @@
 import { Product } from '@shared/types'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { logger } from 'hono/logger'
 import { handle } from 'hono/vercel'
 import executeGraphQLRequest from './client'
 
@@ -9,15 +10,31 @@ export const config = {
 }
 
 const app = new Hono().basePath('/api')
+const senderEmail = 'hideki.tsuruoka.fb@htsuruo.com'
 
+app.use(logger())
 // CORSミドルウェアの設定
+// ref. https://amp.dev/documentation/guides-and-tutorials/email/learn/cors-in-email
 app.use(
   '/*',
   cors({
     origin: 'https://mail.google.com',
     credentials: true,
+    // フォーム送信後のリダイレクト処理を許可
+    // ref. https://amp.dev/ja/documentation/components/email/amp-form#%E9%80%81%E4%BF%A1%E5%BE%8C%E3%81%AE%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88
+    exposeHeaders: [
+      'AMP-Access-Control-Allow-Source-Origin',
+      'AMP-Redirect-To',
+    ],
   })
 )
+
+app.use('/*', async (c, next) => {
+  const requestHeaders = c.req.header()
+  console.log('Request Headers:', requestHeaders)
+  await next()
+  c.header('AMP-Email-Allow-Sender', senderEmail)
+})
 
 app.get('/products', async (c) => {
   const query = `
@@ -95,7 +112,12 @@ app.post('/cart/create', async (c) => {
   }
 
   const { data } = await executeGraphQLRequest(mutation, variables)
-  return c.json(data)
+  return c.json(data, {
+    headers: {
+      // TODO(htsuruo): 仮のリダイレクト先を設定
+      'AMP-Redirect-To': 'https://hono.dev/',
+    },
+  })
 })
 
 app.post('/cart/associate', async (c) => {

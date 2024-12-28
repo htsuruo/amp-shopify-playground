@@ -74,6 +74,16 @@ export const createAmpEmailTemplate = (
             <input type="hidden" name="id" value="${product.variantId}">
             <input type="hidden" name="quantity" value="1">
             <input type="submit" value="カートに追加" class="add-to-cart-button">
+            <div submit-success>
+              <template type="amp-mustache">
+                Success!
+              </template>
+            </div>
+            <div submit-error>
+              <template type="amp-mustache">
+                Failure!
+              </template>
+            </div>
           </form>
         </div>
       `
