@@ -33,7 +33,27 @@ app.use('/*', async (c, next) => {
   const requestHeaders = c.req.header()
   console.log('Request Headers:', requestHeaders)
   await next()
-  c.header('AMP-Email-Allow-Sender', senderEmail)
+  c.res.headers.set('AMP-Email-Allow-Sender', senderEmail)
+  c.res.headers.set('Content-Type', 'application/json')
+  // レスポンスヘッダーのすべてのキーと値をログ出力
+  for (const [key, value] of c.res.headers.entries()) {
+    console.log(`${key}: ${value}`)
+  }
+})
+
+app.get('/', async (c) => {
+  return c.json({ message: 'Hello, World!(GET)' })
+})
+app.post('/', async (c) => {
+  return c.json(
+    { message: 'Hello, World!(POST)' },
+    {
+      headers: {
+        // TODO(htsuruo): 仮のリダイレクト先を設定
+        'AMP-Redirect-To': 'https://hono.dev/',
+      },
+    }
+  )
 })
 
 app.get('/products', async (c) => {

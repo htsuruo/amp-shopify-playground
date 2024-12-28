@@ -1,4 +1,5 @@
 import { Product } from '@shared/types'
+import { baseUrl } from '.'
 import { formatPrice } from './util'
 
 export const createAmpEmailTemplate = (
@@ -13,6 +14,7 @@ export const createAmpEmailTemplate = (
     <meta charset="utf-8">
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+    <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
     <style amp4email-boilerplate>
       body {
         visibility: hidden
@@ -58,6 +60,33 @@ export const createAmpEmailTemplate = (
   </head>
 
   <body>
+    <form id="myform"
+    method="GET"
+    action-xhr="${baseUrl}" >
+      <input type="submit" value="GET Request" class="add-to-cart-button">
+      <div submitting>
+      Form submitting... Thank you for waiting.
+      </div>
+      <div submit-success>
+        <template type="amp-mustache">
+          Success!: <b>{{message}}</b>
+        </template>
+      </div>
+    </form>
+
+    <form id="myform2"
+    method="POST" action-xhr="${baseUrl}">
+      <input type="submit" value="POST Request" class="add-to-cart-button">
+      <div submitting>
+      Form submitting... Thank you for waiting.
+      </div>
+      <div submit-success>
+        <template type="amp-mustache">
+          Success!: <b>{{message}}</b>
+        </template>
+      </div>
+    </form>
+
     <div class="product-container">
       ${products
         .map(
@@ -70,20 +99,12 @@ export const createAmpEmailTemplate = (
           }"></amp-img>
           <p>価格: ${formatPrice(product.price)}円</p>
 
-          <form method="post" action-xhr="${proxyServerUrl}">
+          <form id="${
+            product.variantId
+          }" method="post" action-xhr="${proxyServerUrl}">
             <input type="hidden" name="id" value="${product.variantId}">
             <input type="hidden" name="quantity" value="1">
             <input type="submit" value="カートに追加" class="add-to-cart-button">
-            <div submit-success>
-              <template type="amp-mustache">
-                Success!
-              </template>
-            </div>
-            <div submit-error>
-              <template type="amp-mustache">
-                Failure!
-              </template>
-            </div>
           </form>
         </div>
       `

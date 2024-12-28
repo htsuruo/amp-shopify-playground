@@ -3,14 +3,14 @@ import 'dotenv/config'
 import { createAmpEmailTemplate } from './amp-email-template'
 import { EmailService } from './email-service'
 
-// const baseUrl = 'http://localhost:3000'
-const baseUrl =
-  'https://amp-shopify-playground-htsuruo-htsuruos-projects.vercel.app'
+// const baseUrl = 'http://localhost:3000/api'
+export const baseUrl =
+  'https://amp-shopify-playground-htsuruo-htsuruos-projects.vercel.app/api'
 
 async function main() {
   // const template = loadTemplate('../amp_template/sample.html')
 
-  const response = await fetch(`${baseUrl}/api/products`)
+  const response = await fetch(`${baseUrl}/products`)
   const data = await response.json()
   const products = data as Product[]
   console.log(products)
