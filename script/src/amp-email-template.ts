@@ -61,8 +61,8 @@ export const createAmpEmailTemplate = (
 
   <body>
     <form id="myform"
-    method="GET"
-    action-xhr="${baseUrl}" >
+    method="get"
+    action-xhr="${baseUrl}">
       <input type="submit" value="GET Request" class="add-to-cart-button">
       <div submitting>
       Form submitting... Thank you for waiting.
@@ -75,7 +75,7 @@ export const createAmpEmailTemplate = (
     </form>
 
     <form id="myform2"
-    method="POST" action-xhr="${baseUrl}">
+    method="post" action-xhr="${baseUrl}">
       <input type="submit" value="POST Request" class="add-to-cart-button">
       <div submitting>
       Form submitting... Thank you for waiting.

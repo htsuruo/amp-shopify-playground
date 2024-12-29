@@ -42,7 +42,15 @@ app.use('/*', async (c, next) => {
 })
 
 app.get('/', async (c) => {
-  return c.json({ message: 'Hello, World!(GET)' })
+  return c.json(
+    { message: 'Hello, World!(GET)' },
+    {
+      headers: {
+        // TODO(htsuruo): 仮のリダイレクト先を設定
+        'AMP-Redirect-To': 'https://hono.dev/',
+      },
+    }
+  )
 })
 app.post('/', async (c) => {
   return c.json(
