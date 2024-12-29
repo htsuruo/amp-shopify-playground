@@ -90,9 +90,15 @@ Shopify管理画面をより効率化するためのAPIに思える
 [CORS in AMP for Email](https://amp.dev/documentation/guides-and-tutorials/email/learn/cors-in-email)記載の通りであるが、Version2ではXHRを投げる際に`AMP-Email-Allow-Sender`に`from`アドレスをレスポンスヘッダーにつけて返す必要がある。
 
 - GmailからのXHRはリクエストヘッダーに`AMP-Email-Sender: [送信元アドレス]`が付与される
-  - 例: `AMP-Email-Sender: sender@company.example`
 - サーバーからのレスポンスヘッダーに`AMP-Email-Allow-Sender: [送信元アドレス]`をつけて返却する
-  例: AMP-Email-Allow-Sender: sender@company.example
+
+```yaml
+# Request Header
+AMP-Email-Sender: sender@company.example
+
+# Response Header
+AMP-Email-Allow-Sender: sender@company.example
+```
 
 ## `<amp-form>`のリダイレクトについて
 
