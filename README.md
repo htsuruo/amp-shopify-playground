@@ -85,6 +85,41 @@ Shopify管理画面をより効率化するためのAPIに思える
 
 > [amp-form] Form submission failed: Error: Request viewerRenderTemplate failed: Error: Class$obf__10: Access to fetch at 'https://[YOUR_DOMAIN]/cart/add.js' from origin 'https://mail.google.com' has been blocked by AMP CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 
+## CORSについて
+
+[CORS in AMP for Email](https://amp.dev/documentation/guides-and-tutorials/email/learn/cors-in-email)記載の通りであるが、Version2ではXHRを投げる際に`AMP-Email-Allow-Sender`に`from`アドレスをレスポンスヘッダーにつけて返す必要がある。
+
+- GmailからのXHRはリクエストヘッダーに`AMP-Email-Sender: [送信元アドレス]`が付与される
+  - 例: `AMP-Email-Sender: sender@company.example`
+- サーバーからのレスポンスヘッダーに`AMP-Email-Allow-Sender: [送信元アドレス]`をつけて返却する
+  例: AMP-Email-Allow-Sender: sender@company.example
+
+## `<amp-form>`のリダイレクトについて
+
+Website版であれば[Redirecting after a submission](https://amp.dev/documentation/components/amp-form#redirecting-after-a-submission)記載の通り、レスポンスヘッダーに以下を返せば実現できルトの記載あり。
+
+```sh
+AMP-Redirect-To: https://example.com/forms/thank-you
+Access-Control-Expose-Headers: AMP-Redirect-To
+```
+
+ただしemail版（AMP for Email）では[Component-specific considerations](https://amp.dev/documentation/guides-and-tutorials/email/learn/email-spec/amp-email-format#component-specific-considerations)記載の通り、`<amp-form>`でのリダイレクトは禁止されている（[日本語サイトではRedirectの記載も残っている](https://amp.dev/ja/documentation/components/email/amp-form#%E9%80%81%E4%BF%A1%E5%BE%8C%E3%81%AE%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88)が英語ドキュメントの方が正しそうである）。
+
+>Redirects in <amp-form> are disallowed at runtime.
+
+試しに上記のレスポンスヘッダー対応をし以下をレスポンスしてみたが、Hello World!を表示するだけで特にリダイレクトは走らなかった（`AMP-Redirect-To`は機能しなかった）。
+
+```ts
+return c.json(
+    { message: 'Hello, World!' },
+    {
+      headers: {
+        'AMP-Redirect-To': 'https://hono.dev/',
+      },
+    }
+  )
+```
+
 ## ユーザに成り代わって商品をカート追加する方法
 
 結論、認証はユーザー操作が必要なので王道のイメージではできない気がする。
