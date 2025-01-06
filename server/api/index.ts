@@ -28,26 +28,10 @@ app.use('/*', async (c, next) => {
 })
 
 app.get('/', async (c) => {
-  return c.json(
-    { message: 'Hello, World!(GET)' },
-    {
-      headers: {
-        // TODO(htsuruo): 仮のリダイレクト先を設定
-        'AMP-Redirect-To': 'https://hono.dev/',
-      },
-    }
-  )
+  return c.json({ message: 'Hello, World!(GET)' })
 })
 app.post('/', async (c) => {
-  return c.json(
-    { message: 'Hello, World!(POST)' },
-    {
-      headers: {
-        // TODO(htsuruo): 仮のリダイレクト先を設定
-        'AMP-Redirect-To': 'https://hono.dev/',
-      },
-    }
-  )
+  return c.json({ message: 'Hello, World!(POST)' })
 })
 
 app.get('/products', async (c) => {
@@ -100,7 +84,7 @@ app.get('/products', async (c) => {
 
 app.post('/cart/create', async (c) => {
   const mutation = `
-      mutation cartCreate($input: CartInput) {
+      mutation cartCreate($input: CartInput!) {
         cartCreate(input: $input) {
           cart {
             id
@@ -126,12 +110,8 @@ app.post('/cart/create', async (c) => {
   }
 
   const { data } = await executeGraphQLRequest(mutation, variables)
-  return c.json(data, {
-    headers: {
-      // TODO(htsuruo): 仮のリダイレクト先を設定
-      'AMP-Redirect-To': 'https://hono.dev/',
-    },
-  })
+  console.log('Cart:', JSON.stringify(data))
+  return c.json(data)
 })
 
 app.post('/cart/associate', async (c) => {
@@ -165,12 +145,25 @@ app.post('/cart/associate', async (c) => {
 
   const data = await executeGraphQLRequest(mutation, variables)
 
-  return c.json(data, {
-    headers: {
-      'AMP-Access-Control-Allow-Source-Origin': 'https://02ebb2-4d-2',
-      'Access-Control-Expose-Headers': 'AMP-Access-Control-Allow-Source-Origin',
-    },
-  })
+  return c.json(data)
+})
+
+app.post('/create/customer_token', async (c) => {
+  const mutation = `
+      mutation customerAccessTokenCreate {
+      customerAccessTokenCreate(input: {email: "xxx", password: "xxx"}) {
+        customerAccessToken {
+          accessToken
+        }
+        customerUserErrors {
+          message
+        }
+      }
+    }
+    `
+  const data = await executeGraphQLRequest(mutation)
+
+  return c.json(data)
 })
 
 export default handle(app)
