@@ -6,6 +6,33 @@ AMP for GmailでのShopify連携（カート追加）を検証するためのレ
 - Server Framework: [Hono](https://hono.dev/)
 - Hosting: [Vercel](https://vercel.com/)
 
+### Sequence
+
+```mermaid
+sequenceDiagram
+    participant Developer
+    participant Server
+    participant Shopify
+    participant SendGrid
+    participant EmailClient
+
+    Developer->>Server: Execute script
+    Server->>Shopify: Request product data
+    Shopify-->>Server: Return product data
+    Server->>SendGrid: Send email with AMP template
+    SendGrid-->>EmailClient: Deliver email to user
+
+    EmailClient->>Server: Click button in email
+    Server->>Shopify: Execute mutation
+    Shopify-->>Server: Return mutation result
+    Server-->>EmailClient: Return response
+```
+
+1. Developerがスクリプトを実行しサーバーからStorefront APIを経由してShopifyから商品情報を取得
+1. 取得した商品情報をサーバーにてAMPテンプレート記法に埋め込んでSendGrid v3 APIを使ってメール送信
+1. メールクライアント内のボタンをクリックしREST APIでサーバにリクエスト
+1. リクエストを受け取ったサーバーはStorefront APIのmutation処理を実行しメールクライアントへ結果を返却
+
 ## Setup
 
 ### `.env`に以下の情報を記載し作成
