@@ -56,6 +56,10 @@ export const createAmpEmailTemplate = (
         line-height: 1.5em; /* 行の高さ */
         max-height: 4.5em; /* 3行分の高さ */
       }
+
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
 
@@ -75,7 +79,7 @@ export const createAmpEmailTemplate = (
     </form>
 
     <form id="myform2"
-    method="post" action-xhr="${baseUrl}">
+    method="post" action-xhr="${baseUrl}" on="submit-success:AMP.setState({ checkoutUrl: event.response.checkoutUrl })">
       <input type="submit" value="POST Request" class="add-to-cart-button">
       <div submitting>
       Form submitting... Thank you for waiting.

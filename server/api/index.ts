@@ -109,9 +109,10 @@ app.post('/cart/create', async (c) => {
     },
   }
 
-  const { data } = await executeGraphQLRequest(mutation, variables)
-  console.log('Cart:', JSON.stringify(data))
-  return c.json(data)
+  const json = await executeGraphQLRequest(mutation, variables)
+  const cart = json['cartCreate']['cart']
+  console.log('cart:', JSON.stringify(cart))
+  return c.json(cart)
 })
 
 app.post('/cart/associate', async (c) => {
@@ -149,21 +150,61 @@ app.post('/cart/associate', async (c) => {
 })
 
 app.post('/create/customer_token', async (c) => {
+  const body = await c.req.json()
+  const { email, password } = body
   const mutation = `
-      mutation customerAccessTokenCreate {
-      customerAccessTokenCreate(input: {email: "xxx", password: "xxx"}) {
-        customerAccessToken {
-          accessToken
-        }
-        customerUserErrors {
-          message
+      mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+        customerAccessTokenCreate(input: $input) {
+          customerAccessToken {
+            accessToken
+          }
+          customerUserErrors {
+            message
+          }
         }
       }
-    }
     `
-  const data = await executeGraphQLRequest(mutation)
+  const variables = {
+    input: {
+      email,
+      password,
+    },
+  }
+  const res = await executeGraphQLRequest(mutation, variables)
+  const json = JSON.parse(JSON.stringify(res))
+  const token =
+    json['customerAccessTokenCreate']['customerAccessToken']['accessToken']
+  return c.json(token)
+})
 
-  return c.json(data)
+app.post('/create/customer_create', async (c) => {
+  const body = await c.req.json()
+  const { email, password } = body
+  const mutation = `
+      mutation customerCreate($input: CustomerCreateInput!) {
+        customerCreate(input: $input) {
+          customer {
+            firstName
+            lastName
+            email
+          }
+          customerUserErrors {
+            field
+            message
+            code
+          }
+        }
+      }
+    `
+  const variables = {
+    input: {
+      email,
+      password,
+    },
+  }
+  const json = await executeGraphQLRequest(mutation, variables)
+  const token = json['customerCreate']['customer']
+  return c.json(token)
 })
 
 export default handle(app)

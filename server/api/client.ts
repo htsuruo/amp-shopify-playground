@@ -12,11 +12,12 @@ const executeGraphQLRequest = async (
 ) => {
   try {
     const { data, errors } = await client.request(operation, { variables })
+    console.log('Data:', data)
     if (errors) {
       console.error('Errors:', errors)
       throw new Error('Internal Server Error')
     }
-    return data
+    return JSON.parse(JSON.stringify(data))
   } catch (error) {
     console.error('Error:', error)
     throw new Error('Internal Server Error')

@@ -6,7 +6,7 @@
   "keywords": [],
   "author": "",
   "engines": {
-    "node": ">=23.0.0",
+    "node": ">=20.0.0",
     "npm": "use pnpm",
     "yarn": "use pnpm"
   },
