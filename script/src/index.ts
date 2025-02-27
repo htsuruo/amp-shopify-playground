@@ -8,7 +8,7 @@ export const baseUrl =
   'https://amp-shopify-playground-htsuruo-htsuruos-projects.vercel.app/api'
 
 async function main() {
-  // const template = loadTemplate('../amp_template/sample.html')
+  // const template = loadTemplate('../amp_template/sample2.html')
 
   const response = await fetch(`${baseUrl}/products`)
   const data = await response.json()

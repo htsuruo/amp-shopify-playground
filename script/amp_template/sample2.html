@@ -1,0 +1,239 @@
+<!doctype html>
+<html ⚡4email>
+
+<head>
+  <meta charset="utf-8">
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
+  <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
+  <script async custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js"></script>
+  <style amp4email-boilerplate>
+    body {
+      visibility: hidden
+    }
+  </style>
+  <style amp-custom>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: white;
+    }
+
+    .header {
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    .logo {
+      font-size: 12px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .hero-image {
+      position: relative;
+      width: 100%;
+    }
+
+    .hero-text {
+      position: absolute;
+      top: 20%;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .section-content {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .pack-item {
+      display: flex;
+      margin-bottom: 15px;
+      border: 1px solid #eee;
+      padding: 10px;
+    }
+
+    .pack-image {
+      width: 80px;
+      height: 80px;
+      background-color: #eee;
+      margin-right: 15px;
+    }
+
+    .pack-details {
+      flex: 1;
+    }
+
+    .pack-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .pack-description {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .cta-button {
+      display: block;
+      background-color: #1a2c4d;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .footer {
+      background-color: #f5f5f5;
+      padding: 15px;
+      text-align: center;
+      font-size: 10px;
+      color: #666;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .social-icon {
+      width: 30px;
+      height: 30px;
+      background-color: #eee;
+      border-radius: 50%;
+      margin: 0 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">Wandering</div>
+      <div>3:02 PM</div>
+    </div>
+
+    <div class="hero-image">
+      <amp-img src="https://source.unsplash.com/random/600x400/?mountains,hiking" width="600" height="400"
+        layout="responsive" alt="Mountain adventure scene"></amp-img>
+      <div class="hero-text">
+        ARE YOU READY FOR<br>YOUR NEXT ADVENTURE?
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="section-title">What's on your packing list?</div>
+      <div class="section-content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua.
+      </div>
+
+      <amp-accordion expand-single-section>
+        <section expanded>
+          <h3 class="section-title">Plan your pack.</h3>
+          <div>
+            <div class="section-content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+            </div>
+
+            <div class="pack-item">
+              <div class="pack-image">
+                <amp-img src="https://source.unsplash.com/random/80x80/?backpack" width="80" height="80"
+                  alt="Backpack"></amp-img>
+              </div>
+              <div class="pack-details">
+                <div class="pack-title">Essential Backpack</div>
+                <div class="pack-description">Ut labore et dolore magna aliqua ut enim ad minim veniam.</div>
+              </div>
+            </div>
+
+            <div class="pack-item">
+              <div class="pack-image">
+                <amp-img src="https://source.unsplash.com/random/80x80/?hiking,boots" width="80" height="80"
+                  alt="Hiking boots"></amp-img>
+              </div>
+              <div class="pack-details">
+                <div class="pack-title">Trail-Ready Footwear</div>
+                <div class="pack-description">Ut labore et dolore magna aliqua ut enim ad minim veniam.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </amp-accordion>
+
+      <a class="cta-button" role="button">Start Packing</a>
+
+      <form method="post" action-xhr="https://example.com/subscribe">
+        <div>
+          <input type="email" name="email" placeholder="Enter your email for packing tips" required>
+          <input type="submit" value="Subscribe">
+        </div>
+        <div submit-success>
+          <template type="amp-mustache">
+            Thanks for subscribing! We'll send you packing tips soon.
+          </template>
+        </div>
+        <div submit-error>
+          <template type="amp-mustache">
+            Oops! Something went wrong. Please try again later.
+          </template>
+        </div>
+      </form>
+    </div>
+
+    <div class="footer">
+      <div class="social-icons">
+        <div class="social-icon">
+          <amp-img src="https://source.unsplash.com/random/20x20/?icon,instagram" width="20" height="20"
+            alt="Instagram"></amp-img>
+        </div>
+        <div class="social-icon">
+          <amp-img src="https://source.unsplash.com/random/20x20/?icon,facebook" width="20" height="20"
+            alt="Facebook"></amp-img>
+        </div>
+        <div class="social-icon">
+          <amp-img src="https://source.unsplash.com/random/20x20/?icon,twitter" width="20" height="20"
+            alt="Twitter"></amp-img>
+        </div>
+      </div>
+      <div>Privacy Policy | Unsubscribe | Terms of Use</div>
+      <div>© Wandering 2025 • 123 Trail St, Mountain View</div>
+    </div>
+  </div>
+</body>
+
+</html>
